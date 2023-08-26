@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Symphony</title>
+</head>
+
+<body>
+    <style>
+    @import url('https://fonts.cdnfonts.com/css/coolvetica');
+
+    @font-face {
+        font-family: 'Road Rage';
+        src: url('/assets/fonts/Road_Rage.otf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'Akira';
+        src: url('/assets/fonts/Akira.otf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'coolvetica';
+        src: url('/assets/fonts/coolvetica.otf') format('truetype');
+    }
+
+    body {
+        user-select: none;
+        margin: 0;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-o-user-select: none;
+user-select: none;
+-webkit-tap-highlight-color:rgba(255,255,255,0);
+
+    }
+
+    a {
+        text-decoration: none;
+        color: white;
+        cursor: default;
+    }
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+        height: 0.5rem;
+        background-color: rgb(255, 255, 255,0.1);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.6);
+        border-radius: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+    }
+
+    .container {
+        background-color:  rgb(101, 118, 130);
+    }
+
+
+    .banner {
+        position: relative;
+        width: 100%;
+        height: 30rem;
+        background-position: top;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+
+    .banner-overview {
+        display: block;
+        width: 90%;
+        position: absolute;
+        z-index: 1;
+        bottom: -13rem;
+        left: 5%;
+        right: 5%;
+        margin: 0 auto;
+        text-shadow: 0.2rem 0.2rem 2rem rgba(0, 0, 0, 0.4);
+
+    }
+
+    .banner-title {
+        font-family: 'Akira';
+        margin: 0;
+        margin-bottom: 0.1rem;
+        padding: 0;
+        font-size: 3.5rem;
+        line-height: 100%;
+        color: rgb(255, 255, 255);
+
+    }
+
+    .description {
+        font-family: 'coolvetica';
+        margin: 0;
+        padding: 0;
+        font-size: 1.6rem;
+        line-height: 100%;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 1rem;
+
+    }
+
+    .banner-genre-container {
+        display: inline-flex;
+    }
+
+    .banner-genre {
+        font-family: 'coolvetica';
+        margin: 0.2rem;
+        padding: 0.3rem;
+        width: fit-content;
+        text-transform: uppercase;
+        font-size: 1.4rem;
+        border-radius: 0.3rem;
+        background: rgba(255, 255, 255, 0.3);
+        line-height: 100%;
+        text-shadow: none;
+        color: rgba(250, 250, 250, 0.9);
+        transition: 0.1s ease-in-out;
+    }
+
+
+
+    .big-overview-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .big-overview-container_with_background {
+        display: flex;
+        border-radius: 1rem;
+        align-items: bottom;
+        justify-content: space-between;
+    }
+
+    .big-overview-button {
+        display: block;
+        height: 7rem;
+        border-radius: 1.5rem;
+        background: rgba(200, 200, 200, 0.2);
+        backdrop-filter: blur(0.3rem);
+        width: 16%;
+        text-shadow: none;
+        justify-content: center;
+        padding: 0rem 1rem;
+        align-items: center;
+        transition: background 0.1s ease-in;
+
+    }
+
+    .big-overview-button-heading {
+        font-size: 2.8rem;
+        display: flex;
+        justify-content: flex-end;
+        font-family: "coolvetica";
+        text-align: center;
+        color: rgba(255, 255, 255, 1);
+        padding: 0;
+    }
+
+    .big-overview-button-subheading {
+        font-size: 1.2rem;
+        font-family: "coolvetica";
+        transform: rotate(270deg);
+        color: rgba(255, 255, 255, 0.5);
+        padding: 0;
+        margin: 0;
+        bottom: 3rem;
+        left: -1rem;
+        position: absolute;
+
+    }
+
+    .big-overview-button-play {
+        display: inline-flex;
+        height: 7rem;
+        font-size: 2.5rem;
+        text-shadow: none;
+        color: white;
+        justify-content: center;
+        align-items: center;
+        border-radius: 1.5rem;
+        background: rgb(56, 169, 53);
+        width: 16%;
+        transition: transform 0.1s ease-in;
+    }
+
+    .big-overview-button-play:hover {
+        transform: scale(1.06);
+        cursor: default;
+    }
+
+    .big-overview-button:hover {
+        background: rgba(0, 0, 0, 0.6);
+        cursor: default;
+    }
+
+
+    .banner-body-blender {
+        display: flex;
+        position: absolute;
+        width: 100%;
+        height: 20rem;
+        top: 10rem;
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0),  rgb(101, 118, 130));
+    }
+
+    .body-container {
+        width: 90%;
+        margin: 0 auto;
+        margin-top: 15rem;
+        padding-bottom: 15rem;
+    }
+
+    .body-heading {
+        font-family: "coolvetica";
+        font-size: 1.5rem;
+        margin-bottom: 0.1rem;
+        text-transform: uppercase;
+        text-shadow: none;
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+
+    .body-text {
+        margin-top: 0;
+        font-family: "coolvetica";
+        font-size: 1.2rem;
+        font-weight: 100;
+        margin-bottom: 1rem;
+        text-shadow: none;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+
+    .body-music-container {
+        margin-top: 1rem;
+        overflow-y: hidden;
+        white-space: nowrap;
+        display: flex;
+        width: 100%;
+        padding: 1rem 1rem;
+        overflow-x: scroll;
+    }
+
+    .body-music-card {
+        background: rgba(255, 255, 255, 0.1);
+        width: 10rem;
+        margin-right: 1.5rem;
+        transition: transform 0.1s ease-in-out, height 0.3s ease-in-out;
+        border-radius: 0.8rem;
+        padding-bottom: 1rem;
+    }
+
+    .body-music-card:hover {
+        transform: scale(1.1);
+        cursor: default;
+        /*   height:19rem;*/
+
+    }
+
+    .body-music-card:hover .body-music-img {
+        /*   transform:rotate(2deg);*/
+        height: 12rem;
+        filter: grayscale(0%);
+
+    }
+
+    .body-music-card:hover .body-music-text {
+        color: rgba(255, 255, 255, 1);
+        white-space: pre-line;
+
+    }
+
+    .body-music-img {
+        width: 10rem;
+        filter: grayscale(50%);
+        border-radius: 0.8rem;
+        height: 15rem;
+        object-fit: cover;
+        transition: height 0.3s ease-in-out;
+
+    }
+
+    .body-music-text {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 1.3rem;
+        border-radius: 0.5rem;
+        padding: 0.4rem;
+        margin: 0;
+        text-align: center;
+        white-space: pre;
+        text-overflow: ellipsis;
+        font-family: "coolvetica";
+        overflow: hidden;
+        transition: color 0.3s ease-out;
+    }
+
+    .body-music-subtext {
+        font-size: 1rem;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.6);
+        border-radius: 0.3rem;
+        padding: 0rem 1rem;
+        width: fit-content;
+        text-align: center;
+        white-space: pre;
+        text-overflow: ellipsis;
+        font-family: "coolvetica";
+        overflow: hidden;
+        transition: color 0.3s ease-out;
+        align-items: center;
+    }
+
+    .body-video-container {
+        margin-top: 1rem;
+        overflow-y: hidden;
+        white-space: nowrap;
+        display: inline-block;
+        width: 100%;
+        overflow-x: scroll;
+    }
+
+    .body-video-holder {
+        margin-right: 1.5rem;
+        display: inline-flex;
+        background-position: bottom;
+        width: 19rem;
+        height: 12rem;
+        border-radius: 1rem;
+        position: relative;
+        background-size: cover;
+    }
+
+    .body-video-holder:hover {
+        filter: grayscale(0%);
+    }
+
+    .body-wallpaper-holder {
+        margin-right: -20rem;
+        display: inline-flex;
+        background-position: bottom;
+        width: 24rem;
+        box-shadow: 0rem 0rem 2rem rgba(0, 0, 0, 0.3);
+        height: 14rem;
+        border-radius: 1rem;
+        position: relative;
+        background-size: cover;
+        transition: margin-right 0.2s ease-in-out, transform 0.1s ease-in;
+    }
+
+    .body-poster-holder {
+        margin-right: -5rem;
+        display: inline-flex;
+        background-position: bottom;
+        width: 10rem;
+        box-shadow: 0rem 0rem 2rem rgba(0, 0, 0, 0.3);
+        height: 14rem;
+        border-radius: 0.9rem;
+        position: relative;
+        background-size: cover;
+        transition: margin-right 0.2s ease-in-out, transform 0.1s ease-in;
+    }
+
+    .body-music-holder {
+        margin-right: -5rem;
+        display: inline-flex;
+        background-position: bottom;
+        width: 14rem;
+        box-shadow: 0rem 0rem 2rem rgba(0, 0, 0, 0.3);
+        height: 14rem;
+        border-radius: 50%;
+        position: relative;
+        background-size: cover;
+        transition: margin-right 0.2s ease-in-out, transform 0.1s ease-in;
+    }
+
+    .body-wallpaper-info-container {
+        border-radius: 1rem;
+        position: absolute;
+        height: 3rem;
+        width: 90%;
+        padding: 0 5%;
+        background: rgba(100, 100, 100, 0.1);
+        backdrop-filter: blur(2rem);
+        bottom: 0;
+        display: inline-flex;
+        transition: height 0.1s ease-out;
+    }
+
+    .body-wallpaper-container {
+        margin-top: 1rem;
+        overflow-y: hidden;
+        white-space: nowrap;
+        display: inline-block;
+        width: 100%;
+        padding: 2rem 2rem;
+        overflow-x: scroll;
+    }
+
+    .body-wallpaper-holder:hover {
+        margin-right: 1.5rem;
+        cursor: default;
+        box-shadow: 0rem 0rem 2rem rgba(0, 0, 0, 0.7);
+        transform: scale(1.13);
+    }
+
+    .body-poster-holder:hover {
+        margin-right: 1rem;
+        cursor: default;
+        box-shadow: 0rem 0rem 2rem rgba(0, 0, 0, 0.7);
+        transform: scale(1.13);
+    }
+
+
+    .body-music-holder:hover {
+        margin-right: 0.6rem;
+        cursor: default;
+        box-shadow: 0rem 0rem 2rem rgba(0, 0, 0, 0.7);
+        transform: scale(1.13);
+        animation: spin 5s infinite linear;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+
+    .body-video-info-container {
+        border-radius: 1rem;
+        position: absolute;
+        height: 3rem;
+        width: 90%;
+        padding: 0 5%;
+        background: rgba(100, 100, 100, 0.1);
+        backdrop-filter: blur(2rem);
+        bottom: 0;
+        display: inline-flex;
+        transition: height 0.1s ease-out;
+    }
+
+    .body-video-holder:hover .body-video-info-container {
+        height: 6rem;
+        cursor: default;
+    }
+
+
+    .body-video-holder:hover .body-video-info-text {
+        white-space: pre-line;
+        text-overflow: none;
+    }
+
+    .body-video-info-play-btn {
+        border-radius: 50%;
+        /*    background: rgba(235,235,235,0.7);*/
+        font-size: 1.5rem;
+        align-self: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        height: 3rem;
+        width: 3rem;
+        text-align: center;
+        transition: transform 0.2s ease-out;
+    }
+
+    .body-video-info-play-btn:hover {
+        transform: scale(1.1);
+        cursor: default;
+    }
+
+    .body-video-info-text {
+        display: inline-flex;
+        font-size: 1.1rem;
+        margin: 0;
+        margin-left: 1rem;
+        align-items: center;
+        white-space: pre;
+        text-overflow: ellipsis;
+        font-family: "coolvetica";
+        overflow: hidden;
+        color: white;
+        text-shadow: 0.2rem 0.2rem 2rem rgba(0, 0, 0, 0.4);
+
+    }
+
+    .header {
+        background: transparent;
+        width: 92%;
+        display: flex;
+        position: absolute;
+        top: 1rem;
+        left: 4%;
+        right: 4%;
+        justify-content: space-between;
+        height: 2.5rem;
+        z-index: 3;
+    }
+
+    .header input {
+        border: none;
+        border-radius: 1rem;
+        /*   float:left;*/
+        font-size: 1.3rem;
+        padding: 0rem 1rem;
+        color: white;
+        backdrop-filter: blur(0.2rem);
+        font-family: "coolvetica";
+        background: rgba(5, 21, 30, 0.5);
+    }
+
+    .header h1 {
+        border-radius: 1rem;
+        font-size: 4rem;
+        padding: 0rem 1rem;
+        font-weight: 300;
+        margin: 0;
+        font-family: "Road Rage";
+        text-shadow: 0.2rem 0.2rem 6rem rgba(0, 0, 0, 1);
+
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .header input::placeholder {
+        color: white;
+    }
+
+    .header input:focus {
+        border: 0;
+        outline: none;
+    }
+
+    .showtime-container {
+        display: flex;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+        padding: 1rem;
+    }
+
+    .showtime-holder {
+        background-color: rgba(255, 255, 255, 0.7);
+        width: 100%;
+        backdrop-filter: blur(0.2rem);
+        height: 7rem;
+        border-radius: 1rem;
+        padding: 1rem 1rem;
+        margin-right: 0.8rem;
+        transition: background-color 0.1s ease-in;
+        background-image:
+            linear-gradient(to right bottom, rgba(0, 0, 0, 0.1) 25%, transparent 25%),
+            linear-gradient(to left bottom, rgba(0, 0, 0, 0.1) 25%, transparent 25%),
+            linear-gradient(to right top, rgba(0, 0, 0, 0) 25%, transparent 25%),
+            linear-gradient(to left top, rgba(0, 0, 0, 0.1) 25%, transparent 25%);
+        background-size: 40px 40px;
+        background-position: 0 0;
+        z-index: 1;
+    }
+
+    .showtime-headline {
+        color: black;
+        font-family: 'coolvetica';
+        font-size: 1.5rem;
+        margin: 0;
+        transition: color 0.5s ease-in;
+
+    }
+
+    .showtime-timeslots {
+        color: white;
+        background: rgba(0, 0, 0, 0.9);
+        font-family: 'coolvetica';
+        margin: 0;
+        margin-right: 0.5rem;
+        margin-top: 0.2rem;
+        font-size: 1.2rem;
+        padding: 0.4rem;
+        border-radius: 0.5rem;
+        transition: color 0.5s ease-in;
+
+    }
+
+    .showtime-subheadline {
+        font-size: 1rem;
+        font-style: italic;
+        font-family: 'coolvetica';
+        color: rgb(60, 60, 60);
+        margin: 0;
+        transition: color 0.9s ease-in;
+
+    }
+
+    .showtime-holder:hover {
+        cursor: default;
+        transform: perspective(100rem) rotateY(-10deg);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .showtime-holder:hover .showtime-subheadline {
+        color: rgb(30, 30, 30, );
+    }
+
+    .showtime-holder:hover .showtime-headline {
+        color: rgb(250, 250, 250);
+    }
+
+
+    .music-display-container {
+        margin-top: 1rem;
+        overflow-y: hidden;
+        white-space: nowrap;
+        display: inline-block;
+        width: 100%;
+        overflow-x: scroll;
+    }
+
+    .music-display-items {
+        margin-right: 1.5rem;
+        display: inline-flex;
+        background-position: bottom;
+        width: 22rem;
+        height: 13rem;
+        overflow"hidden
+border-radius: 0.6rem;
+        padding: 0.5rem;
+        position: relative;
+        transform: scale(0.99);
+        transition: 0.2s ease-in-out;
+    }
+
+    .music-display-items img {
+        width: 100%;
+        object-fit: cover;
+        filter: contrast(1.2);
+        border-radius: 1.2rem;
+        height: auto;
+    }
+
+    .music-display-items:hover {
+        transform: scale(1.05);
+        cursor: default;
+    }
+
+    .music-display-items:hover .music-display-text {
+        opacity: 1;
+        cursor: default;
+    }
+
+    .music-display-text {
+        position: absolute;
+        display: flex;
+        opacity: 0.8;
+        margin: 1.1rem 1rem;
+        width: 20rem;
+        white-space: pre-line;
+        text-overflow: ellipsis;
+        color: white;
+        line-height: 1;
+        text-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
+        font-size: 1.9rem;
+        bottom: 2.5rem;
+        transition: 0.4s ease-in-out;
+        font-family: 'coolvetica';
+    }
+
+    .gamepad-button {
+        font-size: 3rem;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        padding: 1rem;
+        top: 1rem;
+        right: 1rem;
+        width: 2rem;
+        text-align: center;
+        margin: 0px auto;
+        height: 1.8rem;
+        display: flex;
+        transition: 0.2s ease-in-out
+    }
+
+    .play-quiz {
+        height: 5rem;
+        font-size: 2rem;
+        text-align: center;
+        width: 100%;
+        font-family: 'Akira';
+        display: flex;
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.5);
+        justify-content: center;
+        margin-top: 2rem;
+        align-items: center;
+        transition: 0.4s ease-in-out;
+    }
+
+    .play-quiz:hover {
+        cursor: default;
+        background: rgba(255, 255, 255, 0.8);
+        transform: scale(1.05);
+    }
+
+    .save-button {
+        font-size: 3rem;
+        position: absolute;
+        margin: 0px auto;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        padding: 1rem;
+        justify-content: center;
+        top: 5.5rem;
+        width: 2rem;
+        height: auto;
+        right: -1rem;
+        text-align: center;
+        display: flex;
+        transition: 0.2s ease-in-out;
+    }
+
+    .save-button:hover,
+    .gamepad-button:hover {
+        transform: scale(1.1);
+        background: rgba(250, 250, 250, .9);
+        color: black !important;
+    }
+
+    .fade-in {
+        opacity: 0;
+        transition: 0.2s ease-in-out;
+    }
+
+    .fade-in.active {
+        opacity: 1;
+    }
+
+.heart-artist{
+    font-size: 2.5rem;
+    margin-right: 1rem;
+    background: rgba(255,255,255,0.6);
+    color: white;
+    padding: 1rem;
+    border-radius: 50%;
+}
+.heart-artist:hover {
+    background: rgba(255,255,255,1);
+    transform: scale(1.1);
+    transition: 0.3s ease;
+    color:black;
+}
+
+
+    </style>
+    <div id="container" class="container">
+        <div class="header">
+            <a href="/home">
+                <h1></h1>
+            </a>
+        </div>
+        <div class='banner' style="background-image: url({{data['img']}});">
+            <div class="banner-overview">
+                <div style="display: flex;align-items: center;">
+                   <i class="far fa-heart heart-artist"></i>
+
+                    <p class="banner-title">{{data['name']}}</p>
+                </div>
+
+                {%if data['bio'] !=None:%}
+                <p class="description">{{data['bio'][:100]}}..</p>
+                {%endif%}
+                <div class="big-overview-container">
+                    <div class="music-display-container">
+                        {%for video in data['videos']['results']:%}
+                        <a href="#" class="music-link" data-artist="{{ video['artists'][0]['name'] }}" data-id="{{ video['videoId'] }}" data-artist-img="{{data['img'] }}" data-title="{{ video['title'] }}" data-image="{{ video['thumbnails'][-1]['url']}}">
+                            <div class="music-display-items">
+                                <img loading="lazy" src="{{video['thumbnails'][-1]['url']}}" />
+                                <p class='music-display-text'> {{video['title']}}</p>
+                                <div class="banner-genre-container" style="width:19rem; position: absolute;bottom:0;margin:1rem 1rem">
+                                    <p class="banner-genre">{{video['views']}} Streams</p>
+                                </div>
+                                <div class="gamepad-button"><i class="fa-solid fa-film" style="font-size: 1.6rem;"></i></div>
+                            </div>
+                        </a>
+                        {%endfor%}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="banner-body-blender"></div>
+        <div class="body-container">
+            <p class="banner-title" style="font-size:2.5rem;text-shadow:0px 0px 2rem rgba(255,255,255,0.2);margin-top:3rem;text-align: left;">Albums</p>
+            <div class="big-overview-container">
+                <div class="music-display-container">
+                    {%for album in data['albums']['results']:%}
+                    <a href="/album/{{album['browseId']}}">
+                        <div class="music-display-items" style="width: 16rem;height: 16rem;">
+                            <img loading="lazy" src="{{album['thumbnails'][-1]['url']}}" />
+                            <p class='music-display-text' style="font-size: 1.6rem; width:15rem"> {{album['title']}}</p>
+                            <div class="banner-genre-container" style="width:15rem; position: absolute;margin:1rem 1rem;bottom:0">
+                                <p class="banner-genre" style="background: backdrop-filter: blur(5px);">{{album['year']}}</p>
+                                {%if album['isExplicit']==True:%}
+                                <p class="banner-genre" style="backdrop-filter: blur(5px);">EXPLICIT</p>
+                                {%endif%}
+                            </div>
+                            <div class="gamepad-button"><i class="fa-solid fa-record-vinyl fa-beat-fade" style="font-size: 2rem;"></i></div>
+                        </div>
+                    </a>
+                    {%endfor%}
+                </div>
+            </div>
+            <p class="banner-title" style="font-size:2.5rem;text-shadow:0px 0px 2rem rgba(255,255,255,0.2);margin-top:3rem;text-align: left;">Songs - Popular</p>
+            <div class="big-overview-container">
+                <div class="music-display-container">
+                    {%for song in data['songs']['results']:%}
+                    <a href="#" class="music-link" data-artist="{{ song['artists'][0]['name'] }}" data-id="{{ song['videoId'] }}"data-artist-img="{{data['img'] }}"  data-title="{{ song['title'] }}" data-image="{{ song['thumbnails'][-1]['url'].split('=w')[0] + '=w300-h300-l90-rj' }}">
+                        <div class="music-display-items" style="width: 16rem;height: 16rem;">
+                            <img loading="lazy" src="{{song['thumbnails'][-1]['url'].split("=w")[0] +"=w300-h300-l90-rj" }}" />
+                            <p class='music-display-text' style="font-size: 1.6rem; width:15rem"> {{song['title']}}</p>
+                            <div class="banner-genre-container" style="width:15rem; position: absolute;margin:1rem 1rem;bottom:0">
+                                <p class="banner-genre" style="background: backdrop-filter: blur(5px);">{{song['year']}}</p>
+                                {%if song['isExplicit']==True:%}
+                                <p class="banner-genre" style="backdrop-filter: blur(5px);">EXPLICIT</p>
+                                {%endif%}
+                            </div>
+                            <div class="gamepad-button"><i class="fa-solid fa-music" style="font-size: 2rem;"></i></div>
+                        </div>
+                    </a>
+                    {%endfor%}
+                </div>
+            </div>
+            <a href="/quiz/{{data['id']}}">
+                <div class="play-quiz">Play Quiz</div>
+            </a>
+        </div>
+    </div>
+    <script>
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
+
+    const container = document.getElementById('container');
+    const elements = container.querySelectorAll('*');
+
+    elements.forEach(element => {
+        element.classList.add('fade-in');
+    });
+
+    window.addEventListener('load', () => {
+        elements.forEach(element => {
+            element.classList.add('active');
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const musicLinks = document.querySelectorAll(".music-link");
+
+        musicLinks.forEach(function(link) {
+            link.addEventListener("click", function(event) {
+                event.preventDefault();
+
+                const id = link.getAttribute("data-id");
+                const title = link.getAttribute("data-title");
+                const image = link.getAttribute("data-image");
+                const artist = link.getAttribute("data-artist");
+                const artist_img = link.getAttribute("data-artist-img");
+
+                const messageData = {
+                    id: id,
+                    title: title,
+                    artist: artist,
+                    image: image,
+                    artist_img:artist_img
+                };
+
+                window.parent.postMessage(messageData, "*");
+            });
+        });
+    });
+    </script>
+</body>
+
+</html>

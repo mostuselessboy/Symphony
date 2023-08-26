@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=0.6">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="icon" href="/assets/img/logo.png" type="image/x-icon">
+	<title>Symphony-Music</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+<style>
+    @font-face {
+        font-family: 'Akira';
+        src: url('/assets/fonts/Akira.otf') format('truetype');
+    }
+    @font-face {
+        font-family: 'coolvetica';
+        src: url('/assets/fonts/coolvetica.otf') format('truetype');
+    }
+    a{
+    	color:rgba(255,255,255,0.7);
+    	text-decoration: none;
+    }
+	body{
+		cursor: url(''), auto;
+		margin:0;
+		background: rgb(115,130,146);
+/*		background: linear-gradient( rgb(115,130,146), rgb(101,118,130));*/
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-webkit-tap-highlight-color:rgba(255,255,255,0);
+-o-user-select: none;
+user-select: none;
+outline: none;
+	}
+
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+        height: 0.5rem;
+        background-color: rgb(255, 255, 255,0.1);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.6);
+        border-radius: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+    }
+
+	.container{
+		display: flex;
+		width: 100%;
+		flex-direction: rown;
+		height: 100vh;
+	}
+	.response-frame{
+		width:100%;
+		height: 100%;
+		padding:0;
+		border: 0px;
+		background: transparent;
+		overflow: hidden;
+	}
+
+	.response-frame{
+    width: 100%;
+    height: 84%;
+    padding: 0;
+    border-radius: 1rem;
+    border: 0px;
+    margin: 1rem;
+    background: transparent;
+    overflow: hidden;
+	box-shadow: 0 0 4rem rgba(0,0,0,0.5);
+	}
+	.navbar{
+		width:9%;
+		height: 100%;
+		padding:0;
+		border: 0px;
+		display: flex;
+		align-items: top;
+		background: transparent;
+		overflow: hidden;
+	}
+
+
+	.navbar-container {
+    height: 85%;
+    overflow: hidden;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.8rem;
+    margin: 10%;
+    color: rgba(255,255,255,0.8);;
+    font-size: 2rem;
+    justify-content: space-around;
+    align-items: center;
+    backdrop-filter: blur(2rem);
+    background: rgba(255,255,255,0.04);
+	box-shadow: 0 0 4rem rgba(0,0,0,0.4);
+}
+	.player{
+		height: 11%;
+		position: fixed;
+		bottom:0;
+		backdrop-filter: blur(3rem);
+		justify-content: space-between;
+		align-items:center;
+		border-radius: 0.5rem;
+		width: 95%;
+		margin: 0.5%;
+		padding:0% 2%;
+		background:rgba(188, 204, 212, 0.06);
+		display: none;
+		font-size: 2.2rem;
+		font-family: 'coolvetica';
+		color:rgba(255,255,255,0.9);
+		transition: 0.1s ease-in-out;
+	}
+	.player-fullscreen{
+		height: 100%;
+		margin: 0;
+		padding:0%;
+		width: 100%;
+		justify-content: center;
+		flex-direction: column;
+
+	}
+
+	@keyframes glow {
+	  0% {
+	    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+	  }
+	  100% {
+	    box-shadow: 0 0 5rem rgba(00,0, 1);
+	  }
+	}
+	.player-music-data-fullscreen{
+		width: 70% !important;
+		justify-content: center;
+		flex-direction: column;
+		transition: 0.1s ease-in-out;
+
+
+	}
+	.controls-fullscreen{
+		width: 80% !important;
+		font-size: 2.5rem;
+	}
+	.video-fullscreen{
+		height: 22rem !important;
+		width: fit-content; !important;
+		max-width: 100% !important;
+	    background: rgba(0, 0, 0, 0.2);
+	    margin: auto 0px;
+	    margin-right: 0!important;
+	    transition: 0.1s ease-in-out;
+	    border-radius: 1rem !important;
+/*	    animation: 1s glow infinite alternate;*/
+	}
+	.lyrics-container{
+		display: none;
+		overflow-x: hidden;
+		overflow-y: scroll;
+		height: 25rem !important;
+		width: 100% !important;
+		max-width: 100% !important;
+	    background: rgba(255, 255, 255, 0.3);
+	    margin: auto 0px;
+	    transition: 0.1s ease-in-out;
+	    border-radius: 1rem !important;
+	}
+	.lyrics-container p{
+		padding: 0% 8%;
+		transition: 0.1s ease-in-out;
+}
+
+	.lyrics-container p:hover{
+		padding: 0% 8%;
+		background: rgba(255,255,255,0.3);
+		border-radius: 1rem;
+		transform: scale(1.01);
+}
+	.controls{
+		width: 25%;
+		display: flex;
+		justify-content: space-around;
+	}
+	.player-img{
+    height: 3.5rem;
+    margin: auto 0px;
+    transition: 0.1s ease-in-out;
+    margin-right: 1rem;
+    border-radius: 0.5rem;
+
+	}
+
+	.player-music-data{
+	display: flex;
+	width: 60%;
+	}
+	.active-repeat{
+		backdrop-filter:box-shadow( 0 0 1rem limegreen);
+		color:rgba(155,255,155);
+	}
+	.player-slider{
+	    width: 99%;
+	    height: 0.2rem;
+	    top: 0;
+	    opacity: 0.4;
+	    border-radius: 0.2rem;
+	    left: 0.5%;
+	    position: absolute;
+	    margin: 0px auto;
+/*	    -webkit-appearance: none;
+	    background: rgba(255, 255, 255, 0.2);
+*/	}
+	.player-slider:hover{
+		cursor: default;
+}
+
+.player-slider::-webkit-slider-thumb {
+  transform: scale(0.01);
+  background-color:#ff93a9;
+  transition: transform 0.1s ease-in-out;
+}
+
+/* Show the thumb on hover */
+.player-slider:hover::-webkit-slider-thumb {
+  transform: scale(1.5);
+}
+
+.player-text-div{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.player-btn{
+	transition: 0.3s ease-in-out;
+}
+.player-btn:hover{
+	color: rgba(255,255,255,0.5);
+	border-radius: 50%;
+	cursor: default;
+	transform: scale(1.2);
+}
+
+.player-btn.normal {
+  transform: scale(1);
+  transition: 0.6s ease;
+  filter: brightness(1);
+}
+
+.player-btn.pop {
+  transform: scale(2.5);
+  transition: 0.7s ease;
+  filter: brightness(1.5);
+
+}
+
+.slider-fullscreen{
+	height: 0.5rem;
+    margin: 3% 0px;
+    position: relative;
+}
+
+.player-text-with-like{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+}
+.player-img:hover {
+    transform: scale(1.01);
+    cursor: default;
+}
+.player-text-with-like-fullscreen{
+	margin-top:2%;
+    justify-content: space-between !important;
+}
+.playertitlehover{
+	transition: 0.2s ease-in-out;
+}
+.playertitlehover:hover {
+	cursor: default;
+    font-size:2.1rem;
+    border-radius: 0.5rem;
+}
+.navbar-button{
+	transition: 0.2s ease-in;
+
+}
+
+.navbar-button:hover{
+	transform: scale(1.2);
+	color:white;
+	cursor: default;
+}
+
+
+@media screen and (max-width: 750px){
+
+		.container{
+		flex-direction: column;
+		}
+	.response-frame{
+		margin:2%;
+		width: 95%;
+	}
+	.navbar-container {
+	    height: 80%;
+	    overflow: hidden;
+	    width: 98%;
+	    margin:2%;
+	    flex-direction: row;
+	}
+	.navbar{
+		width: 100%;
+		height: 10%;
+	}
+</style>
+<div class="container">
+<div class="navbar" id="navbar">
+	<div class="navbar-container" >
+	<i class="fa-solid fa-house navbar-button" id="homebtn"></i>
+	<i class="fa-solid fa-search navbar-button"  ></i>
+	<i class="fa-solid fa-heart navbar-button" id="likedbtn"></i>
+	<i class="fa-solid fa-circle-user navbar-button" id="loginbtn"></i>
+	<i class="fa-solid fa-moon navbar-button" id="darkmodebtn"></i>
+	<i class="fa-solid fa-gear navbar-button"></i>
+
+
+</div>
+</div>
+
+	<iframe class="response-frame" src="/home" id="response-iframe"></iframe>
+	<i class="fas fa-circle-chevron-left" id="go-back-button" style="left: 10%; top: 4%; color: rgba(255, 255, 255, 0.4); font-size: 2rem; position: absolute;"></i>
+
+<div class="player" id="player">
+	<input class="player-slider" type="range" min="0" max="100000" step="1" value="1" id="player-slider">
+	<div class="player-music-data" id="player-music-data" >
+	<img id="player-img" style =" display:none"crossorigin="anonymous" class='player-img' src="https://lh3.googleusercontent.com/g8bzAg2zxvdnm7ismLMYLA9-9azb4y6VP2uOF56A2G2rpsqLHT6mrJWXRKq_VttXQZ-o-jmVgTFIVgdj=w544-h544-l90-rj">
+	<video id="audio_player" class="player-img"></video>
+	<div id='lyrics-container' class="lyrics-container">
+		<p id='lyrics'></p>
+	</div>
+	<div class='player-text-with-like' id="player-text-with-like">
+	<div class="player-text-div">
+	<p id="player-title" class="playertitlehover" style="margin:0;" >Beatles - Don't Let Me Down</p>
+	<p id="player-artist" style="margin:0;font-size:1.3rem;color:rgba(255,255,255,0.6)">Beatles</p>
+	<p id="player-lyrics" class="playertitlehover" style="font-size: 1.8rem;margin:0;color:rgba(255,255,255,0.7);display:none;" ></p>
+	</div>
+	<div id="lyric-btn-container" style="display: flex;width:15%;justify-content: space-between;">
+	<i id="lyrics-btn" class="fa-solid fa-music player-btn" style="display:none;margin:0px 2%"></i>
+	<i class="fa-solid fa-download player-btn" style="display:none; margin:0px 3%" id="downloadbtn"></i>
+	</div>
+	</div>
+	</div>
+	<div class='controls' id='controls'>
+		<i class="fa-solid fa-repeat player-btn" id="repeat-btn" style="display:none"></i>
+		<i class="fa-solid fa-backward player-btn"></i>
+		<i class="fa-solid fa-pause player-btn" id="playbtn"></i>
+		<i class="fa-solid fa-forward player-btn"></i>
+		<i class="far fa-heart player-btn"  style="display:none"  id="likebtn"></i>
+	</div>	
+</div>	
+</body>
+<script src="/assets/js/color-thief.min.js"></script>
+
+<script>
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
+const lyricsContainer = document.getElementById("player-lyrics")
+const playertitle= document.getElementById("player-title");;
+isLyricsMode =true;
+lyricsContainer.addEventListener("click", function () {
+	if(isLyricsMode){
+		lyricsContainer.style.display='block';
+		playertitle.style.display='none';
+	}
+	else{
+		lyricsContainer.style.display='none';
+		playertitle.style.display='block';
+	}
+	isLyricsMode =!isLyricsMode ;
+})
+
+
+playertitle.addEventListener("click", function () {
+	if(isLyricsMode){
+		lyricsContainer.style.display='block';
+		playertitle.style.display='none';
+	}
+	else{
+		lyricsContainer.style.display='none';
+		playertitle.style.display='block';
+	}
+	isLyricsMode =!isLyricsMode ;
+})
+const title = document.getElementById("player-title");
+
+document.getElementById("go-back-button").addEventListener("click", function() {
+    document.getElementById("response-iframe").contentWindow.history.back();
+});
+const player = document.getElementById('player');
+const audioPlayer = document.getElementById('audio_player');
+let currentid = null;
+let currenttitle = null;
+let currentimage = null;
+let current_artist =null;
+window.addEventListener("message", function (event) {
+    if (event.origin ===  window.location.hostname) {
+        return;
+    }
+    
+    const receivedData = event.data;
+    console.log("Received message:", receivedData);
+    playerIMG =document.getElementById("player-img")
+    playerIMG.style.display ="block"
+    audioPlayer.style.display ="none"
+    audioPlayer.disablePictureInPicture = true;
+	playerIMG.src = '/assets/img/loading.gif';
+    document.getElementById("player-title").textContent = "Loading Artist";
+    document.getElementById("player-artist").textContent = "Loading Artist";
+    player.style.display = "flex";
+
+    setTimeout(audioPlayer.pause, 2000);
+
+
+	function fetchAndSetupData() {
+	    fetch(`/api/mp3/${receivedData.id}`)
+	        .then(response => response.json())
+	        .then(audioStreamUrl => {
+	            currentid = receivedData.id;
+	            audioPlayer.src = audioStreamUrl['url'];
+	            lyrics_all = audioStreamUrl['lyrics'];
+				currenttitle =receivedData.title;
+				currentimage =  receivedData.image;
+				current_artist = receivedData.artist;
+
+			    document.getElementById("player-title").textContent = (receivedData.title).replace('&#39;',"'");
+			    document.getElementById("player-artist").textContent = receivedData.artist;
+			    document.title = "🎼 "+(receivedData.title).replace('&#39;',"'") +" -Symphony"
+	        document.getElementById("lyrics-container").innerHTML ='';
+	        for (let i = 0; i < lyrics_all.length; i++) {
+	        lyric = document.createElement('p');
+	        lyric.textContent = lyrics_all[i];
+	        document.getElementById("lyrics-container").appendChild(lyric);;
+	    	}
+		    image = playerIMG
+		    audioPlayer.style.display ="block"
+		    playerIMG.style.display ="none"
+		    image.src = receivedData.image;
+			var colorThief = new ColorThief();
+		    image.addEventListener('load', function() {
+		    var dominantColor = colorThief.getColor(image);
+	        var colorString = 'rgba(' + dominantColor[0] + ',' + dominantColor[1] + ',' + dominantColor[2] + ',0.2)';
+	        var colorString2 = 'rgb(' + dominantColor[0] + ',' + dominantColor[1] + ',' + dominantColor[2]+')';
+
+	        player.style.backgroundColor = colorString;
+
+		    });
+	        audioPlayer.play();
+			const playerSlider = document.getElementById('player-slider');
+			audioPlayer.addEventListener('timeupdate', function() {
+			    const currentTime = audioPlayer.currentTime;
+			    const duration = audioPlayer.duration;
+			    const progress = (currentTime / duration) * 100000;
+			    playerSlider.value = progress;
+			});
+
+			playerSlider.addEventListener('input', function() {
+			    const progress = playerSlider.value;
+			    const currentTime = (progress / 100000) * audioPlayer.duration;
+			    audioPlayer.currentTime = currentTime;
+			});
+
+
+
+			synclyric_query = receivedData.title +" " +receivedData.artist;
+			console.log("💖💖💖💖"+synclyric_query);
+			const synclyric_fetchurl = "https://apispotifylyrics.mostuselessboy.repl.co/get_lyrics?query=" + synclyric_query;
+			fetch(synclyric_fetchurl)
+			    .then(response => response.json())
+			    .then(lyrics_data => {
+			        console.log(lyrics_data);
+
+			        const audioPlayer = document.getElementById("audio_player"); // Replace with the actual ID of your audio player
+			        const lyricsContainer = document.getElementById("player-lyrics");
+
+			        if (!lyrics_data.error) {
+			            const lyricsLines = lyrics_data.lines;
+			            
+			            audioPlayer.addEventListener("timeupdate", () => {
+			                let currentLyric = "";
+			                const currentTime = audioPlayer.currentTime * 1000;
+
+			                for (const line of lyricsLines) {
+			                    const startTime = parseInt(line.startTimeMs);
+
+			                    if (startTime <= currentTime) {
+			                        currentLyric = line.words;
+			                    } else {
+			                        break;
+			                    }
+			                }
+
+			                lyricsContainer.textContent = currentLyric;
+			                if (lyricsContainer.textContent == ""){
+			                	lyricsContainer.textContent = "♪";
+			                }
+			            });
+			        }
+			    })
+			    .catch(error => {
+			        console.error("Error fetching lyrics:", error);
+			    });
+
+
+	})}
+
+
+    fetchAndSetupData();
+});
+
+
+
+
+  const downloadbtn = document.getElementById("downloadbtn");
+  iskaroake =false;
+	
+  downloadbtn.addEventListener("click", function () {
+  	currenttitle = document.getElementById('player-title').textContent;
+  	currentartist =document.getElementById('player-artist').textContent;
+  	currentdata = currenttitle+"||"+currentartist;
+	fetch(`/api/karoake/${currentdata }`)
+	    .then(response => response.text())
+	    .then(audioStreamUrl => {
+	    	if (iskaroake==false){
+	    	timecache = audioPlayer.currentTime;
+	    	srccahce = audioPlayer.src;
+	    	audioPlayer.src = audioStreamUrl;
+	    	audioPlayer.currentTime = timecache+6;
+	    	audioPlayer.play();}
+	    else{
+	    	timecache = audioPlayer.currentTime;
+	    	audioPlayer.src = srccahce;
+	    	audioPlayer.currentTime =timecache;
+	    	audioPlayer.play();}
+	    })
+	    	iskaroake = !iskaroake;
+	});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const lyricsbtn = document.getElementById("lyrics-btn");
+  const queuebtn = document.getElementById("likebtn");
+  const repeatbtn = document.getElementById("repeat-btn");
+  const downloadbtn = document.getElementById("downloadbtn");
+  isFullScreen=false;
+  const player = document.getElementById("player");
+  const playermusicdata = document.getElementById("player-music-data");
+const video = document.getElementById("audio_player");
+const playBtn = document.getElementById("playbtn");
+const homebtn = document.getElementById("homebtn");
+const darkmodebtn = document.getElementById("darkmodebtn");
+
+const loginbtn = document.getElementById("loginbtn");
+const likedbtn = document.getElementById("likedbtn");
+const likebtn = document.getElementById("likebtn");
+likebtn.addEventListener('click', () => {
+    console.log(currentid);
+    likebtn.disabled = true; 
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    
+    const requestData = {
+        songid: currentid,
+        img: currentimage,
+        title: currenttitle,
+        artist: current_artist
+    };
+    if (likebtn.className == "far fa-heart player-btn"){
+        likebtn.style.color = "#ff93a9";
+        likebtn.className = "fa-solid fa-heart player-btn";
+    }
+    else if(likebtn.className == "fa-solid fa-heart player-btn"){
+        likebtn.style.color = "white";
+        likebtn.className = "far fa-heart album-heart";
+    }
+    fetch('/api/v2/like_song',  {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(requestData)
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data['text'] == "LIKED") {
+                likebtn.style.color = "#ff93a9";
+                likebtn.className = "fa-solid fa-heart player-btn";
+            } else {
+                likebtn.style.color = "white";
+                likebtn.className = "far fa-heart player-btn";
+            }
+        });
+	likebtn.disabled = false;
+    setTimeout(() => {
+    likebtn.classList.remove("normal");
+    likebtn.classList.add("pop");
+    }, 100);
+    setTimeout(() => {
+        likebtn.classList.remove("pop");
+        likebtn.classList.add("normal");
+    }, 200);
+});
+let darkmode = false;
+let iframedarkmode =false;
+const iframe_elem = document.getElementById('response-iframe');
+
+// iframe_elem.addEventListener('load', function() {
+
+//     const iframeSrc = new URL(iframe_elem.src);
+//     console.log("darlmode", darkmode);
+//     if (darkmode) {
+//     	if (iframedarkmode){
+//         iframeSrc.searchParams.set('darkmode', 'true');
+// 	    iframe_elem.src = iframeSrc.toString();
+// 	    iframedarkmode=!iframedarkmode;
+// 		}
+//     }
+
+// });
+
+darkmodebtn.addEventListener('click', ()=>{
+	darkmode = !darkmode;
+	if (darkmode){
+	document.body.style.backgroundColor = "rgb(11,13,14)";
+	darkmodebtn.className = "fa-solid fa-sun navbar-button";
+	iframe_elem.style.filter = "grayscale(40%)";
+	}else{
+	darkmodebtn.className = "fa-solid fa-moon navbar-button";
+	iframe_elem.style.filter = "grayscale(0%)";
+	document.body.style.backgroundColor = "rgb(115,130,146)";
+	}
+});
+
+homebtn.addEventListener('click', ()=>{
+	iframe_elem.src = "/home";
+});
+
+likedbtn.addEventListener('click', ()=>{
+	iframe_elem.src = "/liked";
+});
+
+
+loginbtn.addEventListener('click', ()=>{
+	iframe_elem.src = "/firebase";
+});
+playBtn.addEventListener('click', () => {
+  if (video.paused) {
+    video.play();
+    playBtn.classList.remove('fa-play');
+    playBtn.classList.add('fa-pause');
+  } else {
+    video.pause();
+    playBtn.classList.remove('fa-pause');
+    playBtn.classList.add('fa-play');
+  }
+});
+
+video.addEventListener('play', () => {
+  playBtn.classList.remove('fa-play');
+  playBtn.classList.add('fa-pause');
+});
+
+repeatbtn.addEventListener('click', ()=>{
+	video.loop = !video.loop;
+	repeatbtn.classList.toggle("active-repeat");
+})
+video.addEventListener('pause', () => {
+  playBtn.classList.remove('fa-pause');
+  playBtn.classList.add('fa-play');
+});
+
+  const lyricsContainer= document.getElementById("lyrics-container");
+  const controls =document.getElementById("controls");
+  const playerSlider = document.getElementById("player-slider");
+  const playertextwithlike = document.getElementById("player-text-with-like");
+  isLyricScreen = false;
+  lyricsbtn.addEventListener("click", function () {
+	if (isLyricScreen) {
+	      video.style.display='block';
+	      lyricsContainer.style.display='none';
+	  }
+	  else{
+	      video.style.display='none';
+	      lyricsContainer.style.display='block';
+	  }
+	    isLyricScreen = !isLyricScreen;
+
+	});
+  video.addEventListener("click", function () {
+    player.classList.toggle("player-fullscreen");
+    video.classList.toggle("video-fullscreen");
+    controls.classList.toggle("controls-fullscreen");
+    playermusicdata.classList.toggle("player-music-data-fullscreen");
+    playerSlider.classList.toggle("slider-fullscreen");
+    playertextwithlike.classList.toggle("player-text-with-like-fullscreen");
+
+   if (isFullScreen) {
+      player.appendChild(playerSlider);
+      lyricsbtn.style.display='none';
+      repeatbtn.style.display='none';
+      likebtn.style.display='none';
+      downloadbtn.style.display='none';
+
+    } else {
+      playermusicdata.appendChild(playerSlider);
+      lyricsbtn.style.display='block';
+      likebtn.style.display='block';
+      repeatbtn.style.display='block';
+      downloadbtn.style.display='block';
+
+    }
+
+    isFullScreen = !isFullScreen;
+
+  });
+});
+
+
+
+</script>
+</html>

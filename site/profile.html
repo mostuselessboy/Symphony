@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <title>Update Profile</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+      @font-face {
+        font-family: 'Akira';
+        src: url('/assets/fonts/Akira.otf') format('truetype');
+      }
+
+      @font-face {
+        font-family: 'coolvetica';
+        src: url('/assets/fonts/coolvetica.otf') format('truetype');
+      }
+
+        body {
+            font-family: 'coolvetica';
+            margin: 0;
+            padding: 0;
+            background:rgb(101, 118, 130);
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -webkit-tap-highlight-color:rgba(255,255,255,0);
+            -o-user-select: none;
+            user-select: none;
+        }
+        ::-webkit-scrollbar {
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: rgb(255, 255, 255,0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+      @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Silkscreen&display=swap');
+
+
+        h1 {
+            font-family: 'coolvetica';
+            color: black;
+            margin:0;
+            font-weight: 100;
+            margin-bottom: 0.2rem;
+            text-align: center;
+        }
+
+
+
+        button {
+    border: none;
+    display: flex;
+    width: fit-content;
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+    color: black;
+    background: rgba(255,255,255,0.53);
+    text-align: center;
+    margin-top: 1rem;
+    transition: 0.3s ease;
+    margin-right:1rem;
+    font-family: 'Russo One', sans-serif;
+        }
+
+        button:hover {
+            background-color: black;
+            color:white;
+        }
+        .user-pronoun{
+            font-size: 1.4rem;
+            margin-top: -0.5rem;
+            color: rgba(5,5,5,0.6);
+        }
+        .user-bio{
+            font-size: 1.4rem;
+            font-weight: 100;
+            text-align: left;
+            color: rgba(5,5,5,0.8);
+        }
+        #profile-img{
+            background: thistle;
+            height: 11rem;
+            width: 11rem;
+            box-shadow: 0 0 2rem rgba(5,5,5,0.2);
+            border-radius: 50%;
+    }
+
+
+            .master-container{
+                background: rgba(255,255,255,0.1);
+                border-radius: 1.2rem;
+                width: 100%;
+                display: flex;
+            }
+            .subcontainer1{
+                width: 20%;
+                display: flex;
+                padding:5%;
+                justify-content: center;
+            }
+            .subcontainer2{
+                width: 60%;
+                display: flex;
+                flex-direction: column;
+                padding: 5%;
+                align-items: flex-start;
+            }
+    </style>
+</head>
+<body>
+    <div class="master-container">
+    <div class="subcontainer1">
+    <img src = "{{data['userpfp_data_url']}}" id="profile-img"/>
+    </div>
+    <div class="subcontainer2">
+    <h1 style="font-family: 'Russo One', sans-serif;">@{{data['username']}}</h1>
+    <h1 class="user-pronoun">{{data['userpronoun']}}</h1>
+    <h1 class="user-bio">{{data['userbio']}}</h1>
+    <div style="display: flex; justify-content: space-between;">
+    <button id="edit_profile">Edit Profile</button>
+    <button id="log_out">Log out</button>
+    </div>
+    </div>
+    </div>
+
+
+    <script type="text/javascript">
+        edit = document.getElementById('edit_profile');
+        edit.addEventListener("click", ()=>{
+            window.location.href = '/edit_profile';
+        });
+
+        log = document.getElementById('log_out');
+        log.addEventListener("click", ()=>{
+            fetch('/api/v2/logout')
+            .then(response=>response.text())
+            .then(txt =>{
+                console.log(txt);
+            })
+            window.location.href = '/home';
+                    });
+    </script>
+
+
+
+
+</body>
+</html>

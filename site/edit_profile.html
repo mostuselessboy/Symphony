@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+    <title>Update Profile</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+      @font-face {
+        font-family: 'Akira';
+        src: url('/assets/fonts/Akira.otf') format('truetype');
+      }
+
+      @font-face {
+        font-family: 'coolvetica';
+        src: url('/assets/fonts/coolvetica.otf') format('truetype');
+      }
+
+        body {
+            font-family: 'coolvetica';
+            margin: 0;
+            padding: 0;
+            background-color: rgba(255,255,255,0.2);
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -webkit-tap-highlight-color:rgba(255,255,255,0);
+            -o-user-select: none;
+            user-select: none;
+        }
+        ::-webkit-scrollbar {
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: rgb(255, 255, 255,0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+
+
+        h1 {
+            font-family: 'Akira';
+            color: black;
+            text-align: center;
+        }
+
+        form {
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            width: 50%;
+            margin: 3% auto;
+        }
+
+        label {
+            display: block;
+            color:#333;
+            font-family: 'akira';
+            margin-bottom: 6px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        textarea,
+        select {
+          width: 90%;
+          padding: 10px;
+          background: rgba(255,255,255,0.3);
+          border: none;
+          font-family: 'coolvetica';
+          border-radius: 1rem;
+          margin-bottom: 10px;
+          font-size: 1.2rem;
+        }
+
+        .profile-image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-image img {
+            background-color: black;
+            width: 7rem;
+            height: 7rem;
+            object-fit: cover;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        button {
+          border: none;
+          display: flex;
+          width:60%;
+          margin: 1rem auto;
+          border-radius: 1rem;
+          font-size: 1.5rem;
+          padding: 1rem 1rem;
+          color: white;
+          text-align: center;
+          font-family: "coolvetica";
+          background: black;
+          text-align: center;
+          transition:0.3s ease;
+          vertical-align: middle;
+        }
+
+        button:hover {
+            background-color: white;
+            color:black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Update Profile</h1>
+    
+    <form id="profile-form" enctype="multipart/form-data">
+        <div class="profile-image">
+            <label for="userpfp">Profile Picture:</label>
+            <img src="{{data['userpfp_data_url']}}" id="userpfp-preview">
+            <input type="file" id="userpfp" name="userpfp" accept="image/*" style="display: none;">
+        </div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" value="{{data['username']}}">
+        
+        
+        <label for="userbio">Bio:</label>
+        <textarea id="userbio" name="userbio">{{data['userbio']}}</textarea>
+        
+        <label for="userpronoun">Pronoun:</label>
+        <select id="userpronoun" name="userpronoun">
+            <option value="he/him">He/Him</option>
+            <option value="she/her">She/Her</option>
+            <option value="they/them">They/Them</option>
+            <option value="sam/sung">Sam/Sung</option>
+            <option value="other">Other</option>
+        </select>
+        
+        <button type="submit">Update Profile</button>
+    </form>
+    </div>
+    <script>
+        const profileForm = document.getElementById('profile-form');
+        const userpfpInput = document.getElementById('userpfp');
+        const userpfpPreview = document.getElementById('userpfp-preview');
+        const imageContainer = document.getElementById('image-container');
+        let selectedFile; 
+        userpfpPreview.addEventListener('click', () => {
+            userpfpInput.click();
+        });
+        
+        userpfpInput.addEventListener('change', () => {
+            selectedFile = userpfpInput.files[0];
+            if (selectedFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    userpfpPreview.src = e.target.result;
+                };
+                reader.readAsDataURL(selectedFile);
+            }
+        });
+        
+        profileForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const userbio = document.getElementById('userbio').value;
+            const userpronoun = document.getElementById('userpronoun').value;
+            
+            const formData = new FormData();
+            formData.append('username', username);
+            formData.append('userbio', userbio);
+            formData.append('userpronoun', userpronoun);
+            formData.append('userpfp', selectedFile);
+            const response = await fetch('/api/v2/update_profile', {
+                method: 'POST',
+                body: formData
+            });
+            if (response.ok) {
+                window.location.href = "/profile";
+            } else {
+                console.log("Error updating profile");
+            }
+            
+        });
+    </script>
+
+
+
+
+</body>
+</html>

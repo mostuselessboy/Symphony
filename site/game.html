@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Music - Quiz</title>
+</head>
+
+<body style="background-image: url({{DATA_artist['img']}});">
+    <style>
+    @import url('https://fonts.cdnfonts.com/css/coolvetica');
+
+    @font-face {
+        font-family: 'Road Rage';
+        src: url('/assets/fonts/Road_Rage.otf') format('truetype');
+    }
+
+    body {
+        background-size: cover;
+        background-position: center center;
+        backdrop-filter: blur(0.7rem);
+        user-select: none;
+        width: 100%;
+        margin: 0;
+        overflow: hidden;
+    }
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+        height: 0.5rem;
+        background-color: rgb(5, 21, 30);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(2, 31, 40, 0.5);
+        border-radius: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+    }
+
+
+    .container {
+        height: 100vh;
+        width: 100%;
+        display: inline-flex;
+        background-color: rgb(5, 21, 30, 0.8);
+    }
+
+    .column-data {
+        padding: 2rem 2rem;
+        background: transparent;
+        width: 25%;
+    }
+
+    .column-game {
+        width: 75%;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.01);
+        filter: blur(0rem);
+        background-size: cover;
+        background-position: center center;
+    }
+
+    .logo {
+        font-family: 'Road Rage';
+        font-size: 3rem;
+        color: white;
+        width: 100%;
+        margin: 0px 0px;
+        text-align: center;
+    }
+
+    .artist-minidata {
+        width: 100%;
+        margin-top: 1rem;
+        height: 10%;
+        align-items: center;
+        padding: 1rem 0rem;
+        overflow: hidden;
+        display: flex;
+        border-radius: 1rem;
+        background-color: rgba(255, 255, 255, 0.2);
+        transition: 0.3s ease-in-out;
+    }
+
+    .artist-minidata:hover {
+        transform: scale(1.07);
+        cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .artist-minidata img {
+        border-radius: 50%;
+        width: 5rem;
+        margin-left: 1rem;
+        height: 5rem;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .artist-minidata p {
+        padding-left: 1rem;
+        padding-left: 1rem;
+        font-family: 'coolvetica';
+        font-size: 2rem;
+        margin: auto 0px;
+        color: white;
+        text-overflow: ellipsis;
+        width: 75%%;
+        text-align: left;
+        white-space: pre;
+        overflow: hidden;
+    }
+
+    .points-data {
+        width: 100%;
+        margin-top: 1rem;
+        display: block;
+        align-items;
+        center;
+        padding: 0rem 0rem 1rem 0rem;
+        border-radius: 1rem;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .points-txt {
+        font-family: 'coolvetica';
+        font-size: 6rem;
+        margin: auto 0px;
+        color: rgb(0, 112, 203);
+        text-shadow: 0px -70px 80px rgba(255, 255, 255, 1);
+        text-overflow: ellipsis;
+        width: 100%;
+        text-align: center;
+        white-space: pre;
+        overflow: hidden;
+        background-image: linear-gradient(45deg, #33ccff, #0055ff, #00ffae, #0055ff);
+        background-size: 200% 100%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        animation: flameAnimation 2s ease-in-out infinite;
+    }
+
+    @keyframes flameAnimation {
+
+        0%,
+        100% {
+            background-position: 0 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+    }
+
+    .points-label {
+        font-family: 'coolvetica';
+        font-size: 2rem;
+        margin: auto 0px;
+        color: white;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-align: center;
+        white-space: pre;
+        overflow: hidden;
+    }
+
+    .music-container {
+        width: 100%;
+        margin-top: 1rem;
+        display: flex;
+        align-items;
+        center;
+        padding: 1rem 0rem;
+        border-radius: 1rem;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .question_txt {
+        font-family: 'coolvetica';
+        font-size: 3rem;
+        margin: auto 0px;
+        color: white;
+        margin-top: 1rem;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-align: center;
+        white-space: pre;
+        overflow: hidden;
+    }
+
+    .quiz-timer {
+        height: 1.5rem;
+        width: 80%;
+        margin: 0 auto;
+        border-radius: 1rem;
+        margin-top: 1rem;
+        background-color: rgba(0, 0, 0, 0.4);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .timer-fill {
+        height: 100%;
+        width: 100%;
+        border-radius: 1rem;
+        background-image: linear-gradient(to right, rgb(0, 112, 203), rgb(0, 12, 150));
+        transition: width 1s linear;
+    }
+
+    .question_display {
+        font-family: 'coolvetica';
+        font-size: 2rem;
+        margin: auto 0px;
+        color: white;
+        margin-top: 2rem;
+        width: 100%;
+        text-align: center;
+    }
+
+    .question_display_option {
+        font-family: 'coolvetica';
+        font-size: 1.6rem;
+        margin: auto 0px;
+        color: white;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-align: center;
+        white-space: pre-line;
+        /*    overflow: hidden; */
+    }
+
+    .option {
+        background: rgba(255, 255, 255, 0.09);
+        border-radius: 0.8rem;
+        margin: 1rem auto;
+        padding: 1rem;
+        width: 70%;
+        transition: 0.1s ease-in-out;
+    }
+
+    .option:hover {
+        transform: scale(1.07);
+        cursor: pointer;
+        background: linear-gradient(to right, rgb(0, 112, 203), rgb(00, 12, 150));
+    }
+
+    .options_container {
+        display: grid;
+        margin: 0px auto;
+        margin-bottom: 4rem;
+        grid-template-columns: repeat(2, 25rem);
+    }
+
+    .player-control {
+        display: flex;
+        justify-content: space-around;
+        color: white;
+        font-size: 2rem;
+        padding: 1rem;
+    }
+
+    .popup {
+        display: flex;
+        position: absolute;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        background: rgba(5, 5, 5, 0.4);
+        padding: 2rem;
+        flex-direction: column;
+        font-size: 2rem;
+        font-family: 'coolvetica';
+        color: white;
+        z-index: 3;
+        backdrop-filter: blur(10rem);
+    }
+
+    .popup button {
+        display: flex;
+        margin: 0px auto;
+        padding: 1rem 4rem;
+        border-radius: 1rem;
+        box-shadow: none;
+        outline: none;
+        color: black;
+        border: none;
+        background: rgba(255, 255, 255, 0.4);
+        text-transform: uppercase;
+        display: none;
+        font-size: 2rem;
+        font-family: "Road Rage";
+        border-radius: 1rem;
+        background-color: white;
+        color: black;
+        transition: 0.4s ease-in-out;
+    }
+
+    .popup button:hover {
+        cursor: pointer;
+        transform: scale(1.07);
+        color: white;
+        font-family: "Road Rage";
+        background-image: linear-gradient(to right, rgb(0, 112, 203), rgb(0, 12, 150));
+
+    }
+
+    .popup-content {
+        padding: 7rem;
+        text-align: center;
+    }
+
+    .option.correct:hover {
+        background-image: linear-gradient(to right, #00ff00, #33cc33);
+        cursor: pointer;
+    }
+
+    .option.wrong:hover {
+        background-image: linear-gradient(to right, #ff0000, #cc3333);
+        cursor: pointer;
+    }
+
+    .option.correct {
+        background-image: linear-gradient(to right, #00ff00, #33cc33);
+        cursor: pointer;
+    }
+
+    .option.wrong {
+        background-image: linear-gradient(to right, #ff0000, #cc3333);
+        cursor: pointer;
+    }
+    </style>
+    <div class='container'>
+        <div id="popup" class="popup">
+            <div class="popup-content" id="popup-content">
+                <p>🎵 Hello, music enthusiasts! Get set to test your knowledge in our electrifying quiz challenge! 🎶 Today's spotlight is on {{DATA_artist['name']}} – the legendary artist who's captured our hearts. As a self-proclaimed superfan, I'm excited to bring you "Guess the {{DATA_artist['name']}} Quiz." 🎵 ⏳ Quick thinking is key! You've got a mere 10 seconds per question to match the artist hints. A correct answer adds 10 points to your score, but be cautious – a wrong one deducts 5 points. Need more time? No worries, just skip without any penalties.</p>
+                <button id="startbtn">Start The Quiz</button>
+            </div>
+        </div>
+        <div id="popup_end" class="popup" style="display: none;">
+            <div class="popup-content" id="popup_end-content">
+                <p id="points-final" class="points-txt" style="font-size:13rem;text-shadow: none;">0000</p>
+                <p>Congratulations! This Was Your Total Points</p>
+                <a href="/"><button id="homebtn" style="display: flex;font-family: 'coolvetica';">Go to Home</button></a>
+            </div>
+        </div>
+        <div class="column-data">
+            <a href="/home">
+                <p class="logo">MuSick</p>
+            </a>
+            <div class="artist-minidata">
+                <img src="{{DATA_artist['img']}}">
+                <div>
+                    <p>{{DATA_artist['name']}}</p>
+                    <p style="font-size:1.2rem;color:rgba(255,255,255,0.3)">Listen on Youtube Music</p>
+                </div>
+                <i class="fa-solid fa-up-right-from-square fa-fade" style="color:rgba(255,255,255,0.7);font-size: 2rem;margin:0px auto;"></i>
+            </div>
+            <div class="points-data">
+                <p id="points" class="points-txt">0000</p>
+                <p class='points-label'>POINTS</p>
+            </div>
+            <div id="player" class="artist-minidata" style="opacity:0;display: block;height: fit-content;">
+                <img id="player-img" style="border-radius: 1rem;height: 9rem;width: 9rem;" src="">
+                <div>
+                    <p style="font-size: 2rem;padding:0.5rem:padding-left:1rem" id="player-text">Music Name</p>
+                    <div class="player-control">
+                        <i id="player-backward" class="fa-solid fa-backward"></i>
+                        <i id="player-pause" class="fa-solid fa-pause fa-fade"></i>
+                        <i id="player-forward" class="fa-solid fa-forward"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column-game">
+            <i class="fa-solid fa-stopwatch fa-beat-fade" style="color:white;text-align: center;width: 100%;font-size:4rem; margin:0;margin-top: 3rem;"></i>
+            <p id="question_no" class='question_txt'>Question 1</p>
+            <div id="quiz-timer" class="quiz-timer">
+                <div id="timer-fill" class="timer-fill"></div>
+            </div>
+            <p id='question' class='question_display'>??????????</p>
+            </p>
+            <div style="display:flex; align-items: center; justify-content: center; ">
+                <div class='options_container'>
+                    <div class="option" id='opt1'>
+                        <p class='question_display_option'></p>
+                    </div>
+                    <div class="option" id='opt2'>
+                        <p class='question_display_option'></p>
+                    </div>
+                    <div class="option" id='opt3'>
+                        <p class='question_display_option'></p>
+                    </div>
+                    <div class="option" id='opt4'>
+                        <p class='question_display_option'></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+<script>
+var data_set = { { dataset | tojson | safe } };
+var currentIndex = 0;
+var currentQuestion = data_set[currentIndex][0];
+var currentOptions = data_set[currentIndex][1];
+var currentAnswer = data_set[currentIndex][2];
+var points = 0;
+var timer = 10;
+var timerInterval;
+
+document.getElementById("startbtn").addEventListener("click", function() {
+    document.getElementById("popup").style.display = "none";
+    document.getElementById("player").style.opacity = "1";
+    document.getElementById("player-pause").click()
+    document.getElementById("player-pause").click()
+
+    currentIndex = 0;
+    updateQuiz();
+});
+
+
+function updateQuiz() {
+    var questionNumber = (currentIndex + 1) + " / " + data_set.length;
+    document.getElementById("question_no").textContent = "Question " + questionNumber;
+    document.getElementById("question").textContent = currentQuestion;
+    var optionElements = document.querySelectorAll(".option");
+    for (var i = 0; i < 4; i++) {
+        var optionTextElement = optionElements[i].querySelector(".question_display_option");
+        optionTextElement.textContent = currentOptions[i];
+    }
+    document.getElementById("points").textContent = points;
+    document.getElementById("points-final").textContent = points;
+
+    currentAnswer = data_set[currentIndex][2];
+    resetTimer();
+}
+
+function resetTimer() {
+    timer = 10;
+    var timerFill = document.getElementById("timer-fill");
+    timerFill.style.width = "100%";
+    clearInterval(timerInterval);
+    startTimer();
+}
+
+function startTimer() {
+    timerInterval = setInterval(function() {
+        if (timer <= 0) {
+            clearInterval(timerInterval);
+            moveNext();
+            return;
+        }
+
+        var timerFill = document.getElementById("timer-fill");
+        var fillPercentage = (timer / 10) * 100;
+        timerFill.style.width = fillPercentage + "%";
+        timer--;
+
+    }, 1000);
+}
+
+function moveNext() {
+    currentIndex++;
+    if (currentIndex < data_set.length) {
+        currentQuestion = data_set[currentIndex][0];
+        currentOptions = data_set[currentIndex][1];
+        updateQuiz();
+    } else {
+        document.getElementById("popup_end").style.display = "block";
+    }
+}
+
+
+var optionButtons = document.querySelectorAll(".option");
+
+for (var i = 0; i < 4; i++) {
+    var clicked = false;
+
+    optionButtons[i].addEventListener("click", function(event) {
+        if (!clicked) {
+            clicked = true;
+
+            var selectedOption = event.currentTarget.querySelector(".question_display_option").textContent;
+            var correctOption = currentAnswer.toString();
+            var optionElement = event.currentTarget;
+
+            for (var j = 0; j < 4; j++) {
+                optionButtons[j].disabled = true;
+            }
+
+            if (selectedOption === correctOption) {
+                const audio = new Audio("/assets/sfx/correct.mp3");
+                audio.play();
+                optionElement.classList.add("correct");
+                points += 10;
+            } else {
+                const audio = new Audio("/assets/sfx/wrong.mp3");
+                audio.play();
+                optionElement.classList.add("wrong");
+                points -= 5;
+            }
+
+            setTimeout(function() {
+                moveNext();
+
+                optionElement.classList.remove("correct");
+                optionElement.classList.remove("wrong");
+
+                for (var j = 0; j < 4; j++) {
+                    optionButtons[j].disabled = false;
+                }
+
+                clicked = false;
+            }, 1500);
+        }
+    });
+}
+</script>
+<script>
+fetch("/api/music/{{DATA_artist['id']}}")
+    .then(response => response.json())
+    .then(data => {
+        const playlistData = data;
+        let currentIndex = 0; 
+        let isPaused = false; 
+        document.getElementById("startbtn").style.display = "block";
+        const player = document.getElementById('player');
+        const playerText = document.getElementById('player-text');
+        const playerImg = document.getElementById('player-img');
+        const playerAudio = new Audio();
+        playerAudio.id = "audio_player";
+        const playerPause = document.getElementById('player-pause');
+        const playerBackward = document.getElementById('player-backward');
+        const playerForward = document.getElementById('player-forward');
+        const playerMute = document.getElementById('player-mute');
+
+        function updatePlayerUI(index) {
+            const [id, songUrl, img] = playlistData[index];
+            playerText.textContent = `${id}`;
+            playerImg.src = img;
+            playerAudio.src = songUrl;
+
+            if (isPaused) {
+                playerPause.classList.remove('fa-pause');
+                playerPause.classList.add('fa-play');
+            } else {
+                playerPause.classList.remove('fa-play');
+                playerPause.classList.add('fa-pause');
+            }
+
+            if (!isPaused) {
+                playerAudio.play();
+            }
+        }
+
+        function playNextSong() {
+            currentIndex = (currentIndex + 1) % playlistData.length;
+            updatePlayerUI(currentIndex);
+        }
+
+        playerAudio.addEventListener('ended', playNextSong);
+        playerPause.addEventListener('click', () => {
+            if (isPaused) {
+                playerAudio.play();
+            } else {
+                playerAudio.pause();
+            }
+            isPaused = !isPaused;
+            updatePlayerUI(currentIndex);
+        });
+        playerBackward.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + playlistData.length) % playlistData.length;
+            updatePlayerUI(currentIndex);
+        });
+        playerForward.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % playlistData.length;
+            updatePlayerUI(currentIndex);
+        });
+        playerMute.addEventListener('click', () => {
+            playerAudio.muted = !playerAudio.muted;
+        });
+
+        updatePlayerUI(currentIndex);
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+</script>
+
+</html>
